@@ -1,35 +1,39 @@
-/*(1) µµ¼­¹øÈ£°¡ 1ÀÎ µµ¼­ÀÇ ÀÌ¸§*/
+/*01-1 ë„ì„œë²ˆí˜¸ê°€ 1ì¸ ë„ì„œì˜ ì´ë¦„*/
 	SELECT bookname FROM Book WHERE bookid=1;
-/*(2) °¡°İÀÌ 20,000¿ø ÀÌ»óÀÎ µµ¼­ÀÇ ÀÌ¸§*/
+/*01-2 ê°€ê²©ì´ 20,000ì› ì´ìƒì¸ ë„ì„œì˜ ì´ë¦„*/
 	SELECT bookname FROM Book WHERE price >= 20000;
-/*(3) ¹ÚÁö¼ºÀÇ ÃÑ ±¸¸Å¾×*/
+/*01-3 ë°•ì§€ì„±ì˜ ì´ êµ¬ë§¤ì•¡*/
 	SELECT SUM(saleprice) 
 	FROM Customer, Orders 
 	WHERE Customer.custid=Orders.custid 
-		AND Customer.name LIKE '¹ÚÁö¼º';
-/*(4) ¹ÚÁö¼ºÀÌ ±¸¸ÅÇÑ µµ¼­ÀÇ ¼ö*/
+		AND Customer.name LIKE 'ë°•ì§€ì„±';
+/*01-4 ë°•ì§€ì„±ì´ êµ¬ë§¤í•œ ë„ì„œì˜ ìˆ˜*/
 	SELECT COUNT(*) FROM Customer, Orders 
 	WHERE Customer.custid=Orders.custid 
-         	AND Customer.name LIKE '¹ÚÁö¼º';
-/*(5) ¹ÚÁö¼ºÀÌ ±¸¸ÅÇÑ µµ¼­ÀÇ ÃâÆÇ»ç ¼ö*/
-	SELECT COUNT(DISTINCT publisher) 
-	FROM Customer, Orders, Book 
-	WHERE Customer.custid=Orders.custid AND Orders.bookid=Book.bookid
-	         AND Customer.name LIKE '¹ÚÁö¼º';
-/*(6) ¹ÚÁö¼ºÀÌ ±¸¸ÅÇÑ µµ¼­ÀÇ ÀÌ¸§, °¡°İ, Á¤°¡¿Í ÆÇ¸Å°¡°İÀÇ Â÷ÀÌ*/
-	SELECT bookname, price, price-saleprice 
-	FROM Customer, Orders, Book 
-	WHERE Customer.custid=Orders.custid AND Orders.bookid=Book.bookid
-         	AND Customer.name LIKE '¹ÚÁö¼º';
-/*(7) ¹ÚÁö¼ºÀÌ ±¸¸ÅÇÏÁö ¾ÊÀº µµ¼­ÀÇ ÀÌ¸§*/
-	SELECT bookname FROM Book b1
-	WHERE NOT EXISTS 
-	    (SELECT bookname FROM Customer, Orders
-	     WHERE Customer.custid=Orders.custid AND Orders.bookid=b1.bookid
-	              AND Customer.name LIKE '¹ÚÁö¼º');
-/*	(´Ù¸¥ ´ä)
+         	AND Customer.name LIKE 'ë°•ì§€ì„±';
+/*01-5 ë°•ì§€ì„±ì´ êµ¬ë°°í•œ ë„í—ˆì˜ ì¶œíŒì‚¬ ìˆ˜*/
+SELECT COUNT(DISTINCT publisher) 
+FROM Customer, Orders, Book 
+WHERE Customer.custid=Orders.custid AND Orders.bookid=Book.bookid
+	         AND Customer.name LIKE 'ë°•ì§€ì„±';
+
+/*01-6 ë°•ì§€ì„±ì´ êµ¬ë§¤í•œ ë„ì„œì˜ ì´ë¦„,ê°€ê²©,ì •ê°€ì™€ íŒë§¤ê°€ê²©ì˜ ì°¨ì´*/
+SELECT bookname, price, saleprice, price-saleprice
+FROM Customer, Orders, Book 
+WHERE Customer.custid=Orders.custid AND Orders.bookid=Book.bookid
+         	AND Customer.name LIKE 'ë°•ì§€ì„±';
+            
+/*01-7 ë°•ì§€ì„±ì´ êµ¬ë§¤í•˜ì§€ ì•Šì€ ë„ì„œì˜ ì´ë¦„*/
+select bookname
+from book b1
+where not exists
+      (select bookname 
+       from customer, orders 
+       where customer.custid=orders.custid and orders.bookid=b1.bookid
+            and customer.name like 'ë°•ì§€ì„±');
+/*	(ë‹¤ë¥¸ ë‹µ)
 	select bookname from book b1
 	minus
 	select bookname from customer c, orders o, book b
 	     where c.custid=o.custid and o.bookid=b.bookid
-	        and c.name like '¹ÚÁö¼º';*/
+	        and c.name like 'ë°•ì§€ì„±';*/
