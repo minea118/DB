@@ -2,19 +2,19 @@ select * from book;
 
 /*04-1*/
 insert into book 
-values(11,'½ºÆ÷Ã÷¼¼°è','´ëÇÑ¹Ìµğ¾î',10000);
+values(11,'ìŠ¤í¬ì¸ ì„¸ê³„','ëŒ€í•œë¯¸ë””ì–´',10000);
 
 /*04-2*/
 delete from book
-where publisher like '»ï¼º´ç';
+where publisher like 'ì‚¼ì„±ë‹¹';
 
 rollback;
 
 /*04-3*/
 /*04-4*/
 update book
-set publisher='´ëÇÑÃâÆÇ»ç'
-where publisher like '´ëÇÑ¹Ìµğ¾î';
+set publisher='ëŒ€í•œì¶œíŒì‚¬'
+where publisher like 'ëŒ€í•œë¯¸ë””ì–´';
 
 /*04-5*/
 create table bookcompany(name varchar(20) primary key,
@@ -26,7 +26,7 @@ alter table bookcompany add webaddress varchar2(30);
 
 /*04-7*/
 insert into bookcompany
-VALUES ('ÇÑºû¾ÆÄ«µ¥¹Ì','¼­¿ï½Ã ¸¶Æ÷±¸','1993-01-01','http://hanbit,co,kr');
+VALUES ('í•œë¹›ì•„ì¹´ë°ë¯¸','ì„œìš¸ì‹œ ë§ˆí¬êµ¬','1993-01-01','http://hanbit,co,kr');
 
 select * from bookcompany;
 
