@@ -57,3 +57,41 @@
 	GROUP BY name 
 	HAVING AVG(saleprice) > 
 	          (SELECT AVG(saleprice) FROM Orders); 
+		  
+		  
+/*cho3. ex2-8*/      
+select name
+from customer
+where name not in (
+        select name
+        from customer, orders
+        where customer.custid=orders.custid);
+        
+/*cho3. ex2-9*/           
+select sum(saleprice),avg(saleprice)
+from orders;
+
+/*cho3. ex2-10*/   
+select name, sum(saleprice) as total
+from customer, orders
+where customer.custid=orders.custid
+group by name;
+        
+/*cho3. ex2-11*/   
+select name, book.bookname
+from customer, orders, book
+where customer.custid=orders.custid 
+    and orders.bookid=book.bookid;
+    
+/*cho3. ex2-12*/      
+select *
+from book, orders
+where book.bookid=orders.bookid and price-saleprice=(select max(price-saleprice)
+                                                        from book, orders
+                                                        where book.bookid=orders.bookid);
+/*cho3. ex2-13*/  
+SELECT name, avg(saleprice)
+from customer, orders
+where customer.custid=orders.custid 
+group by name
+having avg(saleprice)> (select avg(saleprice) from orders);
