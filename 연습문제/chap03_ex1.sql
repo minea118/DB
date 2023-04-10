@@ -37,3 +37,29 @@ where not exists
 	select bookname from customer c, orders o, book b
 	     where c.custid=o.custid and o.bookid=b.bookid
 	        and c.name like '박지성';*/
+		
+	
+/*ch03. ex1-5*/
+select count(distinct publisher)
+from customer, orders,book
+where customer.custid=orders.custid 
+    and orders.bookid=book.bookid 
+    and customer.name like '박지성';
+    
+/*cho3. ex1-6*/
+select bookname,price,price-saleprice
+from customer, orders,book
+where customer.custid=orders.custid 
+    and orders.bookid=book.bookid 
+    and customer.name like '박지성';
+    
+/*cho3. ex1-7*/
+select bookname
+from book
+where not exists (
+        select bookname
+        from customer,orders
+        where customer.custid=orders.custid 
+                and orders.bookid=book.bookid 
+                and customer.name like '박지성');
+                
